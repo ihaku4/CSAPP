@@ -1,0 +1,37 @@
+process
+context switching
+system call
+
+* later explained
+  Architecture: Chapter 4
+  Chapter 2
+  asambly: Chapter 3
+  IO devices : Chapter 6
+  threaded programs: Chapter 12
+  linking and loading: 7
+  virtual memories: Chapter 9
+  create and control their own processes: Chapter 8
+  how compiler uses stack: Chapter 3
+
+
+Thread-Level Parallelism
+Instruction-Level Parallelism
+  one instruction per clock cycle
+  superscalar processors
+Single-Instruction, Multiple-Data (SIMD) Parallelism
+
+Abstraction
+  processor: 
+    instruction set architecture as abstraction of hardware
+  operating system: 
+    files as an abstraction of IO, 
+    virtual memory as an abstraction of program memory
+    process as an abstraction of a running program
+    virtual machine
+
+
+----- Chapter 2
+
+integer arithmetic, multiplication
+  associative
+  commutative
