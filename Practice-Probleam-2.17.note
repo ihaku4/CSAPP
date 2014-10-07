@@ -1,0 +1,14 @@
+hex bin    b2u b2t
+------------------
+0xe 0b1110 14  -2
+0x0 0b0000  0   0
+0x5 0b0101  5   5
+0x8 0b1000  8  -8
+0xd 0b1101 13  -3
+0xf 0b1111 15  -1
+
+* TODO: write code to confirm these results.
+
+* what happens when assignment overflow? like int i = 0x123456789;
+* what happens when +-*/ on signed and unsigned;
+* what happens when type cast? like char c = (char) i;
