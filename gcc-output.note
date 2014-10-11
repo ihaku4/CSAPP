@@ -1,0 +1,26 @@
+gcc % 2>> gcc-output.note
+=========================
+
+type-cast.c: In function ‘main’:
+type-cast.c:24:3: warning: this decimal constant is unsigned only in ISO C90 [enabled by default]
+type-cast.c:24:3: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long unsigned int’ [-Wformat]
+type-cast.c:25:3: warning: this decimal constant is unsigned only in ISO C90 [enabled by default]
+type-cast.c:25:3: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long unsigned int’ [-Wformat]
+type-cast.c:26:3: warning: this decimal constant is unsigned only in ISO C90 [enabled by default]
+type-cast.c:26:3: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long unsigned int’ [-Wformat]
+type-cast.c:39:3: warning: this decimal constant is unsigned only in ISO C90 [enabled by default]
+type-cast.c:42:3: warning: this decimal constant is unsigned only in ISO C90 [enabled by default]
+type-cast.c:42:3: warning: this decimal constant is unsigned only in ISO C90 [enabled by default]
+type-cast.c:44:32: warning: integer overflow in expression [-Woverflow]
+type-cast.c:45:32: warning: integer overflow in expression [-Woverflow]
+
+
+gcc % -std=c99 2>> gcc-output.note
+==================================
+
+type-cast.c: In function ‘main’:
+type-cast.c:24:3: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long long int’ [-Wformat]
+type-cast.c:25:3: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long long int’ [-Wformat]
+type-cast.c:26:3: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long long int’ [-Wformat]
+type-cast.c:44:32: warning: integer overflow in expression [-Woverflow]
+type-cast.c:45:32: warning: integer overflow in expression [-Woverflow]
