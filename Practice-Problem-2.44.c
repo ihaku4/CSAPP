@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 typedef int (*calculate_t)(int);
 
@@ -14,6 +15,10 @@ int test_A(int x) {
   return (x > 0) || (x-1 < 0);
 }
 
+int test_B(int x) {
+  return (x & 7) != 7 || (x<<29 < 0);
+}
+
 int test_C(int x) {
   return (x * x ) >= 0;
 }
@@ -22,13 +27,15 @@ void test_limit(calculate_t calculate)
 {
   int i;
 
-  for (i = 0; i <= 0x7fffffff; i++) {
+//  for (i = 0; i <= 0x7fffffff; i++) {
+  for (i = 0; i <= INT_MAX; i++) {
     if (!calculate(i)) {
       printf("%d %x\n", i, i);
       break;
     }
   }
-  for (i = 0; i >= 0x80000000; i--) {
+//  for (i = 0; i >= 0x80000000; i--) {
+  for (i = 0; i >= INT_MIN; i--) {
     if (!calculate(i)) {
       printf("%d %x\n", i, i);
       break;
@@ -66,6 +73,8 @@ int main(void)
 //  test_limit(test_A);
   puts("-- start test C ---\n");
   test_limit(test_C);
+  puts("-- start test B ---\n");
+  test_limit(test_B);
 
   return 0;
 }
