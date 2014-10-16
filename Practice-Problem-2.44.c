@@ -14,6 +14,10 @@ int test_A(int x) {
   return (x > 0) || (x-1 < 0);
 }
 
+int test_C(int x) {
+  return (x * x ) >= 0;
+}
+
 void test_limit(calculate_t calculate)
 {
   int i;
@@ -58,8 +62,10 @@ int main(void)
       break;
     }
 
-  puts("-- start test A ---\n");
-  test_limit(test_A);
+  //puts("-- start test A ---\n");
+//  test_limit(test_A);
+  puts("-- start test C ---\n");
+  test_limit(test_C);
 
   return 0;
 }
