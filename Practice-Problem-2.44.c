@@ -3,13 +3,7 @@
 #include <limits.h>
 
 typedef int (*calculate_t)(int);
-
-int test_G(int x, int y) {
-  unsigned ux = x;
-  unsigned uy = y;
-
-  return x*~y + ux*uy == -x;
-}
+typedef int (*calculate_2_t)(int, int);
 
 int test_A(int x) {
   return (x > 0) || (x-1 < 0);
@@ -23,34 +17,108 @@ int test_C(int x) {
   return (x * x ) >= 0;
 }
 
-void test_limit(calculate_t calculate)
+int test_D(int x) {
+  return x < 0 || -x <= 0;
+}
+
+int test_E(int x) {
+  return x > 0 || -x >= 0;
+}
+
+int test_F(int x, int y) {
+  unsigned ux = x;
+  unsigned uy = y;
+
+  return x+y == uy+ux;
+}
+
+int test_G(int x, int y) {
+  unsigned ux = x;
+  unsigned uy = y;
+
+  return x*~y + ux*uy == -x;
+}
+
+int test_limit_2(calculate_2_t calculate)
+{
+  int x, y;
+  int test_pass = 1;
+  int step = 1000000; // TODO need to shrink step for precise result.
+
+  for (y = 0; y >= 0; y+=step) {
+    for (x = 0; x >= 0; x+=step) {
+      if (!calculate(x, y)) {
+        printf("x: %d %x\n", x, x);
+        printf("y: %d %x\n", y, y);
+        test_pass = 0;
+        break;
+      }
+//      printf("x = %d %x, y = %d %x\n", x, x, y, y);
+//      printf("of  %d %x,     %d %x\n", INT_MAX, INT_MAX, INT_MAX, INT_MAX);
+    }
+    for (x = 0; x <= 0; x-=step) {
+      if (!calculate(x, y)) {
+        printf("x: %d %x\n", x, x);
+        printf("y: %d %x\n", y, y);
+        test_pass = 0;
+        break;
+      }
+//      printf("x = %d %x, y = %d %x\n", x, x, y, y);
+//      printf("of  %d %x,     %d %x\n", INT_MIN, INT_MIN, INT_MAX, INT_MAX);
+    }
+//    printf("y = %d %x\n", y, y);
+//    printf("    %d %x\n", INT_MAX, INT_MAX);
+    if (!test_pass) break;
+  }
+
+  for (y = 0; y <= 0; y-=step) {
+    for (x = 0; x >= 0; x+=step) {
+      if (!calculate(x, y)) {
+        printf("x: %d %x\n", x, x);
+        printf("y: %d %x\n", y, y);
+        test_pass = 0;
+        break;
+      }
+//      printf("x = %d %x, y = %d %x\n", x, x, y, y);
+//      printf("of  %d %x,     %d %x\n", INT_MAX, INT_MAX, INT_MIN, INT_MIN);
+    }
+    for (x = 0; x <= 0; x-=step) {
+      if (!calculate(x, y)) {
+        printf("x: %d %x\n", x, x);
+        printf("y: %d %x\n", y, y);
+        test_pass = 0;
+        break;
+      }
+//      printf("x = %d %x, y = %d %x\n", x, x, y, y);
+//      printf("of  %d %x,     %d %x\n", INT_MIN, INT_MIN, INT_MIN, INT_MIN);
+    }
+//    printf("y = %d %x\n", y, y);
+//    printf("    %d %x\n", INT_MIN, INT_MIN);
+    if (!test_pass) break;
+  }
+  return test_pass;
+}
+
+int test_limit(calculate_t calculate)
 {
   int i;
+  int test_pass = 1;
 
-//  for (i = 0; i <= 0x7fffffff; i++) {// infinite loop!
-//  for (i = 0; i <= INT_MAX; i++) {  // infinite loop!
-  for (i = 0; i > 0; i++) {
+  for (i = 0; i >= 0; i++) {
     if (!calculate(i)) {
       printf("%d %x\n", i, i);
+      test_pass = 0;
       break;
     }
-    if (i % 100000000 == 0) {
-      printf("i = %d 0x%x\n", i, i);
-      printf(" of %d 0x%x\n", INT_MAX, INT_MAX);
-    }
   }
-//  for (i = 0; i >= 0x80000000; i--) {// infinite loop too!
-//  for (i = 0; i >= INT_MIN; i--) {  // infinite loop too!
-  for (i = 0; i < 0; i--) {
+  for (i = 0; i <= 0; i--) {
     if (!calculate(i)) {
       printf("%d %x\n", i, i);
+      test_pass = 0;
       break;
     }
-    if (i % 100000000 == 0) {
-      printf("i = %d 0x%x\n", i, i);
-      printf(" of %d 0x%x\n", INT_MIN, INT_MIN);
-    }
   }
+  return test_pass;
 }
 
 int main(void)
@@ -79,12 +147,20 @@ int main(void)
       break;
     }
 
-  //puts("-- start test A ---\n");
-//  test_limit(test_A);
-  puts("-- start test C ---\n");
-  test_limit(test_C);
+  puts("-- start test A ---\n");
+  puts(test_limit(test_A) ? "\n" : "fail!\n");
   puts("-- start test B ---\n");
-  test_limit(test_B);
+  puts(test_limit(test_B) ? "\n" : "fail!\n");
+  puts("-- start test C ---\n");
+  puts(test_limit(test_C) ? "\n" : "fail!\n");
+  puts("-- start test D ---\n");
+  puts(test_limit(test_D) ? "\n" : "fail!\n");
+  puts("-- start test E ---\n");
+  puts(test_limit(test_E) ? "\n" : "fail!\n");
+  puts("-- start test F ---\n");
+  puts(test_limit_2(test_F) ? "\n" : "fail!\n");
+  puts("-- start test G ---\n");
+  puts(test_limit_2(test_G) ? "\n" : "fail!\n");
 
   return 0;
 }
