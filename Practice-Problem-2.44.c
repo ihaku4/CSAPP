@@ -27,18 +27,28 @@ void test_limit(calculate_t calculate)
 {
   int i;
 
-//  for (i = 0; i <= 0x7fffffff; i++) {
-  for (i = 0; i <= INT_MAX; i++) {
+//  for (i = 0; i <= 0x7fffffff; i++) {// infinite loop!
+//  for (i = 0; i <= INT_MAX; i++) {  // infinite loop!
+  for (i = 0; i > 0; i++) {
     if (!calculate(i)) {
       printf("%d %x\n", i, i);
       break;
     }
+    if (i % 100000000 == 0) {
+      printf("i = %d 0x%x\n", i, i);
+      printf(" of %d 0x%x\n", INT_MAX, INT_MAX);
+    }
   }
-//  for (i = 0; i >= 0x80000000; i--) {
-  for (i = 0; i >= INT_MIN; i--) {
+//  for (i = 0; i >= 0x80000000; i--) {// infinite loop too!
+//  for (i = 0; i >= INT_MIN; i--) {  // infinite loop too!
+  for (i = 0; i < 0; i--) {
     if (!calculate(i)) {
       printf("%d %x\n", i, i);
       break;
+    }
+    if (i % 100000000 == 0) {
+      printf("i = %d 0x%x\n", i, i);
+      printf(" of %d 0x%x\n", INT_MIN, INT_MIN);
     }
   }
 }
